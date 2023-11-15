@@ -40,7 +40,7 @@ export type SendForgotPasswordEmailResponse = {
   CodeDeliveryDetails: CodeDeliveryDetails;
 };
 
-const cookieDomain = ".localhost";
+const cookieDomain = import.meta.env.VITE_COOKIE_DOMAIN;
 const cookieStorage = new CookieStorage({ domain: cookieDomain });
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
@@ -58,8 +58,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const userPool = useMemo(
     () =>
       new CognitoUserPool({
-        UserPoolId: "us-east-1_LpeJDNSUO",
-        ClientId: "41sfaqphs3bpuqvu8abmfvrrmn",
+        UserPoolId: import.meta.env.VITE_COGNITO_USER_POOL_ID,
+        ClientId: import.meta.env.VITE_COGNITO_CLIENT_ID,
         Storage: cookieStorage,
       }),
     []
