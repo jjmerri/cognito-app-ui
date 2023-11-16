@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import MarketingPage from "../../pages/MarketingPage/MarketingPage";
 import LoginPage from "../../pages/LoginPage/LoginPage";
-import ProtectedPage from "../../pages/ProtectedPage/ProtectedPage";
+import ProfilePage from "../../pages/ProfilePage/ProfilePage";
 import Layout from "../../Layout";
 import useAuth from "../../hooks/useAuth";
 import { useCallback } from "react";
@@ -52,9 +52,9 @@ const AppRouter = () => {
           Component: RegistrationPage,
         },
         {
-          path: "protected",
+          path: "profile",
           loader: protectedLoader,
-          Component: ProtectedPage,
+          Component: ProfilePage,
         },
       ],
     },
