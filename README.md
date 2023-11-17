@@ -1,27 +1,20 @@
-# React + TypeScript + Vite
+# Cognito App UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This app is an example of a minimal setup to get a React ui authenticating with Amazon Cognito with email verification and password reset.
 
-Currently, two official plugins are available:
+The app requires a Cognito user pool and user pool client. Run this command to create the resources in your account:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+`aws cloudformation create-stack --stack-name testcognitostack --template-body file://cognito.yaml`
 
-## Expanding the ESLint configuration
+Once the stack is created you can get the user pool id and client id by running the below command:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+`aws cloudformation describe-stacks --query "Stacks[?StackName=='testcognitostack'][]" --output text`
 
-- Configure the top-level `parserOptions` property like this:
+create a `.env.local` file alongside the existing `.env` file and put the values that printed from the above command in it.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+Start the app:
+
 ```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+yarn install
+yarn run dev
+```

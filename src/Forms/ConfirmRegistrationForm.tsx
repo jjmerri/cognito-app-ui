@@ -9,9 +9,9 @@ import { FormModalComponentProps } from "../components/modals/FormModal/FormModa
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
-export type ConfirmRegistrationFormProps = {
+export interface ConfirmRegistrationFormProps {
   email: string;
-};
+}
 
 export const ConfirmRegistrationForm = ({
   control,
@@ -77,7 +77,7 @@ export const ConfirmRegistrationForm = ({
           color: theme.palette.primary.main,
         }}
       >
-        Didn't get receive the email? Click here to resend.
+        {"Didn't get receive the email? Click here to resend."}
       </Link>
     </>
   );

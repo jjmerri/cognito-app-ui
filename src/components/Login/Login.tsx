@@ -260,7 +260,7 @@ export const LoginPage = () => {
                   color: theme.palette.primary.main,
                 }}
               >
-                Don't have an account? Register for one now.
+                {" Don't have an account? Register for one now."}
               </Link>
             </Grid>
           </Grid>

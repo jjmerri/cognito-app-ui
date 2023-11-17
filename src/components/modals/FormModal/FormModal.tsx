@@ -9,11 +9,11 @@ import { forwardRef, useEffect, useState } from "react";
 import { Control, FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 
-export type FormModalComponentProps = {
+export interface FormModalComponentProps {
   control: Control<FieldValues>;
   setSuccessMessage: (message: string | undefined) => void;
   setErrorMessage: (message: string | undefined) => void;
-};
+}
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -22,7 +22,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export type FormModalProps<ComponentProps = undefined> = {
+export interface FormModalProps<ComponentProps = undefined> {
   FormComponent: React.FC<ComponentProps & FormModalComponentProps>;
   formProps?: ComponentProps;
   isOpen: boolean;
@@ -31,7 +31,7 @@ export type FormModalProps<ComponentProps = undefined> = {
   cancelText?: string;
   submitText?: string;
   error?: string;
-};
+}
 
 const FormModal = <ComponentProps extends object>({
   FormComponent,

@@ -4,7 +4,7 @@ Resources:
   UserPool:
     Type: "AWS::Cognito::UserPool"
     Properties:
-      UserPoolName: !Sub cognitotest-user-pool
+      UserPoolName: !Sub cognito-app-user-pool
       AutoVerifiedAttributes:
         - email
       MfaConfiguration: "OFF"
@@ -22,7 +22,16 @@ Resources:
   UserPoolClient:
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: !Sub cognitotest-client
+      ClientName: !Sub cognito-app-client
       GenerateSecret: false
       UserPoolId: !Ref UserPool
       PreventUserExistenceErrors: ENABLED
+Outputs:
+  UserPoolId:
+    Value: !Ref UserPool
+    Export:
+      Name: "UserPool::Id"
+  UserPoolClientId:
+    Value: !Ref UserPoolClient
+    Export:
+      Name: "UserPoolClient::Id"

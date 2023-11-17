@@ -6,12 +6,12 @@ import FormModal from "../FormModal/FormModal";
 import useAuth from "../../../hooks/useAuth";
 import { FieldValues } from "react-hook-form";
 
-export type ConfirmRegistrationModalProps = {
+export interface ConfirmRegistrationModalProps {
   isOpen: boolean;
   handleConfirmRegistrationSuccess: () => void;
   handleClose: () => void;
   email: string;
-};
+}
 
 const ConfirmRegistrationModal = ({
   isOpen,

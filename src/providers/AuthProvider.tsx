@@ -12,33 +12,33 @@ import {
   ISignUpResult,
 } from "amazon-cognito-identity-js";
 
-export type AppUser = {
+export interface AppUser {
   email: string;
   accessToken: CognitoAccessToken;
   idToken: CognitoIdToken;
   refreshToken: CognitoRefreshToken;
-};
+}
 
-export type AwsLoginError = {
+export interface AwsLoginError {
   code: string;
   name: string;
   message: string;
-};
+}
 
-export type AwsLoginResult = {
+export interface AwsLoginResult {
   session: CognitoUserSession;
   userConfirmationNecessary: boolean | undefined;
-};
+}
 
-export type CodeDeliveryDetails = {
+export interface CodeDeliveryDetails {
   AttributeName: string;
   DeliveryMedium: string;
   Destination: string;
-};
+}
 
-export type SendForgotPasswordEmailResponse = {
+export interface SendForgotPasswordEmailResponse {
   CodeDeliveryDetails: CodeDeliveryDetails;
-};
+}
 
 const cookieDomain = import.meta.env.VITE_COOKIE_DOMAIN;
 const cookieStorage = new CookieStorage({ domain: cookieDomain });
@@ -94,7 +94,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
           console.log(err);
           reject(err);
         } else {
-          resolve(result as ISignUpResult);
+          resolve(result!);
         }
       });
     });
@@ -195,24 +195,27 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const changePassword = (
-    email: string,
     oldPassword: string,
     newPassword: string
   ): Promise<string> => {
-    const cognitoUser = new CognitoUser({
-      Username: email,
-      Pool: userPool,
-      Storage: cookieStorage,
-    });
+    const cognitoUser = userPool.getCurrentUser();
 
     return new Promise((resolve, reject) => {
-      cognitoUser.changePassword(oldPassword, newPassword, (err) => {
-        if (err) {
-          reject(err.message || JSON.stringify(err));
-        } else {
-          resolve("SUCCESS");
-        }
-      });
+      if (cognitoUser) {
+        cognitoUser.getSession((sessionErr: Error) => {
+          if (sessionErr) {
+            reject(sessionErr);
+          } else {
+            cognitoUser.changePassword(oldPassword, newPassword, (err) => {
+              if (err) {
+                reject(err.message || JSON.stringify(err));
+              } else {
+                resolve("SUCCESS");
+              }
+            });
+          }
+        });
+      }
     });
   };
 
@@ -273,7 +276,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         resetPassword,
         loggedIn: !!user,
         user: user,
-        setAuthContext: () => {},
       }}
     >
       {children}

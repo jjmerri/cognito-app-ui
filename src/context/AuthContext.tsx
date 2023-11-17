@@ -5,7 +5,7 @@ import {
   SendForgotPasswordEmailResponse,
 } from "../providers/AuthProvider";
 
-export type AuthContextType = {
+export interface AuthContextType {
   loggedIn: boolean;
   loginUser: (
     username: string,
@@ -18,13 +18,7 @@ export type AuthContextType = {
   registerUser: (email: string, password: string) => Promise<ISignUpResult>;
   confirmRegistration: (email: string, code: string) => Promise<string>;
   resendConfirmationCode: (email: string) => Promise<string>;
-  changePassword: (
-    email: string,
-    oldPassword: string,
-    newPassword: string
-    // TODO put actual types
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ) => any;
+  changePassword: (oldPassword: string, newPassword: string) => Promise<string>;
   sendForgotPasswordEmail: (
     email: string
   ) => Promise<SendForgotPasswordEmailResponse>;
@@ -34,15 +28,16 @@ export type AuthContextType = {
     newPassword: string
   ) => Promise<string>;
   user: AppUser | undefined;
-  setAuthContext: (loggedIn: boolean, user: AppUser) => void;
-};
+}
 
 export const AuthContext = createContext<AuthContextType>({
   loggedIn: false,
   loginUser: async () => {
     throw new Error("AuthProvider not initialized");
   },
-  logoutUser: () => {},
+  logoutUser: () => {
+    throw new Error("AuthProvider not initialized");
+  },
   registerUser: async () => {
     throw new Error("AuthProvider not initialized");
   },
@@ -52,7 +47,9 @@ export const AuthContext = createContext<AuthContextType>({
   resendConfirmationCode: async () => {
     throw new Error("AuthProvider not initialized");
   },
-  changePassword: async () => undefined,
+  changePassword: async () => {
+    throw new Error("AuthProvider not initialized");
+  },
   sendForgotPasswordEmail: async () => {
     throw new Error("AuthProvider not initialized");
   },
@@ -60,7 +57,4 @@ export const AuthContext = createContext<AuthContextType>({
     throw new Error("AuthProvider not initialized");
   },
   user: undefined,
-  setAuthContext: () => {
-    throw new Error("AuthProvider not initialized");
-  },
 });

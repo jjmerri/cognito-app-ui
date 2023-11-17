@@ -1,14 +1,14 @@
 import { FC } from "react";
 import { Alert as AlertComponent } from "@mui/material";
 
-type AlertProps = {
+interface AlertProps {
   show: boolean;
   topMargin?: number;
   bottomMargin?: number;
   width?: string;
   children: React.ReactNode;
   severity: "error" | "warning" | "info" | "success";
-};
+}
 
 const Alert: FC<AlertProps> = ({
   show,
