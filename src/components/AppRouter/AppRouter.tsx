@@ -38,6 +38,7 @@ const AppRouter = () => {
           <ErrorPage />
         </Layout>
       ),
+      hydrateFallbackElement: <div>Loading...</div>,
       children: [
         {
           index: true,
@@ -60,6 +61,6 @@ const AppRouter = () => {
     },
   ]);
 
-  return <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />;
+  return <RouterProvider router={router} />;
 };
 export default AppRouter;
